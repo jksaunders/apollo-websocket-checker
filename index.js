@@ -39,6 +39,10 @@ wsClient.onConnected(() => {
 
 });
 wsClient.onError(error => {
-  console.log('Error', JSON.stringify(error))
+  console.log('Websocket client error', JSON.stringify(error))
   process.exit(1)
 });
+wsClient.onDisconnected(error => {
+  console.log('Websocket client disconnected', JSON.stringify(error))
+  process.exit(1)
+})
