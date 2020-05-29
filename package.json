@@ -1,0 +1,33 @@
+{
+  "name": "apollo-websocket-checker",
+  "version": "1.0.0",
+  "description": "CI tool for checking that an Apollo websocket client can connect to its server",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup index.js --file dist/bundle.js --format cjs",
+    "start": "node dist/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jksaunders/apollo-websocket-checker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jksaunders/apollo-websocket-checker/issues"
+  },
+  "homepage": "https://github.com/jksaunders/apollo-websocket-checker#readme",
+  "dependencies": {
+    "apollo-boost": "^0.4.9",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-link-ws": "^1.0.20",
+    "graphql": "^15.0.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "ws": "^7.3.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "rollup": "^2.11.2"
+  }
+}
