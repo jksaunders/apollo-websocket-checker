@@ -12,8 +12,6 @@ const wsClient = new SubscriptionClient(
   []
 );
 
-let success = false;
-
 wsClient.onConnected(() => {
   console.log('Connected to subscription client!')
 
@@ -33,7 +31,7 @@ wsClient.onConnected(() => {
     query: gql`${argv.query}`,
   }).then(result => {
     console.log('Apollo success', JSON.stringify(result))
-    success = true
+    process.exit()
   }).catch(error => {
     console.log('Apollo error', JSON.stringify(error))
     process.exit(1)
@@ -48,12 +46,3 @@ wsClient.onDisconnected(error => {
   console.log('Websocket client disconnected', JSON.stringify(error))
   process.exit(1)
 })
-
-setTimeout(() => {
-  if (success) {
-    process.exit(0);
-  } else {
-    console.log('Apollo server timed out!')
-    process.exit(1);
-  }
-}, Number.parseInt(argv.timeout))
