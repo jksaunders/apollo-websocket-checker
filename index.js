@@ -31,10 +31,13 @@ wsClient.onConnected(() => {
     apolloClient.query({
       query: gql`${argv.query}`,
     }).then(result => {
-      console.log('Apollo success', JSON.stringify(result))
-      process.exit()
+      console.log('Apollo query success', JSON.stringify(result))
+
+      if (!argv.mutation) {
+        process.exit()
+      }
     }).catch(error => {
-      console.log('Apollo error', JSON.stringify(error))
+      console.log('Apollo query error', JSON.stringify(error))
       process.exit(1)
     })
   }
@@ -43,10 +46,10 @@ wsClient.onConnected(() => {
     apolloClient.mutate({
       mutation: gql`${argv.mutation}`,
     }).then(result => {
-      console.log('Apollo success', JSON.stringify(result))
+      console.log('Apollo mutation success', JSON.stringify(result))
       process.exit()
     }).catch(error => {
-      console.log('Apollo error', JSON.stringify(error))
+      console.log('Apollo mutation error', JSON.stringify(error))
       process.exit(1)
     })
   }
