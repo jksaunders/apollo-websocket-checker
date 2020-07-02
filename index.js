@@ -22,21 +22,34 @@ wsClient.onConnected(() => {
     link,
   });
 
-  if (!argv.query) {
-    console.log('No query specified')
-    process.exit()
+  if (!argv.query && !argv.mutation) {
+    console.log('No query or mutation specified')
+    process.exit(1)
   }
 
-  apolloClient.query({
-    query: gql`${argv.query}`,
-  }).then(result => {
-    console.log('Apollo success', JSON.stringify(result))
-    process.exit()
-  }).catch(error => {
-    console.log('Apollo error', JSON.stringify(error))
-    process.exit(1)
-  })
+  if (argv.query) {
+    apolloClient.query({
+      query: gql`${argv.query}`,
+    }).then(result => {
+      console.log('Apollo success', JSON.stringify(result))
+      process.exit()
+    }).catch(error => {
+      console.log('Apollo error', JSON.stringify(error))
+      process.exit(1)
+    })
+  }
 
+  if (argv.mutation) {
+    apolloClient.mutate({
+      mutation: gql`${argv.mutation}`,
+    }).then(result => {
+      console.log('Apollo success', JSON.stringify(result))
+      process.exit()
+    }).catch(error => {
+      console.log('Apollo error', JSON.stringify(error))
+      process.exit(1)
+    })
+  }
 });
 wsClient.onError(error => {
   console.log('Websocket client error', JSON.stringify(error))
