@@ -22,37 +22,42 @@ wsClient.onConnected(() => {
     link,
   });
 
+  const runTest = async () => {
+    if (argv.query) {
+      console.log('Start query test');
+      try {
+        const result = await apolloClient.query({
+          query: gql`${argv.query}`,
+        });
+        console.log('Apollo query success', JSON.stringify(result));
+      } catch (error) {
+        console.log('Apollo query error', JSON.stringify(error));
+        process.exit(1);
+      }
+    }
+
+    if (argv.mutation) {
+      console.log('Start mutation test');
+      try {
+        const result = await apolloClient.mutate({
+          mutation: gql`${argv.mutation}`,
+        });
+        console.log('Apollo mutation success', JSON.stringify(result));
+      } catch (error) {
+        console.log('Apollo mutation error', JSON.stringify(error));
+        process.exit(1);
+      }
+    }
+
+    process.exit();
+  };
+
   if (!argv.query && !argv.mutation) {
     console.log('No query or mutation specified')
     process.exit(1)
   }
 
-  if (argv.query) {
-    apolloClient.query({
-      query: gql`${argv.query}`,
-    }).then(result => {
-      console.log('Apollo query success', JSON.stringify(result))
-
-      if (!argv.mutation) {
-        process.exit()
-      }
-    }).catch(error => {
-      console.log('Apollo query error', JSON.stringify(error))
-      process.exit(1)
-    })
-  }
-
-  if (argv.mutation) {
-    apolloClient.mutate({
-      mutation: gql`${argv.mutation}`,
-    }).then(result => {
-      console.log('Apollo mutation success', JSON.stringify(result))
-      process.exit()
-    }).catch(error => {
-      console.log('Apollo mutation error', JSON.stringify(error))
-      process.exit(1)
-    })
-  }
+  runTest();
 });
 wsClient.onError(error => {
   console.log('Websocket client error', JSON.stringify(error))
