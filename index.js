@@ -13,7 +13,7 @@ const wsClient = new SubscriptionClient(
 );
 
 wsClient.onConnected(() => {
-  console.log('Connected to subscription client!')
+  console.log('Connected to subscription client!');
 
   const link = new WebSocketLink(wsClient);
 
@@ -54,16 +54,16 @@ wsClient.onConnected(() => {
 
   if (!argv.query && !argv.mutation) {
     console.log('No query or mutation specified')
-    process.exit(1)
+    process.exit(1);
   }
 
   runTest();
 });
 wsClient.onError(error => {
   console.log('Websocket client error', JSON.stringify(error))
-  process.exit(1)
+  process.exit(1);
 });
 wsClient.onDisconnected(error => {
   console.log('Websocket client disconnected', JSON.stringify(error))
-  process.exit(1)
+  process.exit(1);
 })
