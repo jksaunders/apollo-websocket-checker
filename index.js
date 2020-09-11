@@ -48,8 +48,6 @@ wsClient.onConnected(() => {
         process.exit(1);
       }
     }
-
-    process.exit();
   };
 
   if (!argv.query && !argv.mutation) {
@@ -57,10 +55,14 @@ wsClient.onConnected(() => {
     process.exit(1);
   }
 
-  runTest();
+  runTest().then(() => {
+    runTest().then(() => {
+      process.exit();
+    });
+  });
 });
 wsClient.onError(error => {
-  console.log('Websocket client error', JSON.stringify(error))
+  console.log('Websocket client error', error)
   process.exit(1);
 });
 wsClient.onDisconnected(error => {
